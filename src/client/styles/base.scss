@@ -1,0 +1,25 @@
+// website layout is a user form in front of a picture
+@use 'variables';
+
+body {
+    margin: 0;
+    font-family: variables.$font-family;
+    background-image: url(../media/newspaper.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .wrap_app {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #app {
+        background: variables.$color-primary-light;
+        border-radius: variables.$border-radius;
+        border: thin solid variables.$color-primary-dark;
+        width: 90%;
+        max-width: 500px;
+    }
+}

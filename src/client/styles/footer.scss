@@ -1,0 +1,9 @@
+@use 'variables';
+
+footer {
+    margin: variables.$margin-std;
+
+    p {
+        font-size: variables.$font-size-label;
+    }
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+    <title>Sentiment Analysis</title>
+</head>
+
+<body>
+    <div class="wrap_app">
+        <div id="app">
+            <header>
+                <h1>
+                    Natural Language Processing App
+                </h1>
+                <div>
+                    A sentiment analysis for articles
+                </div>
+            </header>
+
+            <main>
+                <section class="senti_input">
+                    <form onsubmit="return Client.handleSubmit(event)">
+                        <input id="url" type="text" name="url" placeholder="please enter url">
+                        <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)"
+                            onsubmit="return Client.handleSubmit(event)">
+                    </form>
+
+
+                    <input type="text" id='destinationInput' placeholder="please enter a destination">
+                    <button id="searchDestinationButton"> search </button>
+                    <div id="placelist">
+                        <select name="" id=""></select>
+                    </div>
+                    <input type="date" name="" id="tripStart">
+                    <button id="saveTripButton">save</button>
+
+                </section>
+
+                <section class="sentiment_status">
+                    <div id="status"></div>
+                </section>
+
+                <section class="sentiment_result_section">
+                    <div class="result_card">
+                        <h2>Polarity</h2>
+                        <div id="polarity" class="result"></div>
+                    </div>
+
+                    <div class="result_card">
+                        <h2>Polarity Confidence</h2>
+                        <div id="polarityConfidence" class="result"></div>
+                    </div>
+
+                    <div class="result_card">
+                        <h2>Subjectivity</h2>
+                        <div id="subjectivity" class="result"></div>
+                    </div>
+
+                    <div class="result_card">
+                        <h2>Subjectivity Confidence</h2>
+                        <div id="subjectivityConfidence" class="result"></div>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <p>Analysis provided by Aylien</p>
+            </footer>
+        </div>
+    </div>
+    <!-- <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script> -->
+
+</body>
+
+</html>

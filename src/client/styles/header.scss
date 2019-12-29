@@ -1,0 +1,19 @@
+@use 'variables';
+
+header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    margin: variables.$margin-std;
+
+    h1 {
+        font-size: variables.$font-size-header;
+        margin: variables.$margin-std;
+    }
+
+    div {
+        font-size: variables.$font-size-label;
+        margin: variables.$margin-std;
+    }
+}
