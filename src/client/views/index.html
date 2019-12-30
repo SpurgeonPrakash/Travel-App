@@ -28,14 +28,26 @@
                             onsubmit="return Client.handleSubmit(event)">
                     </form>
 
+                    <section id="sectionSearchDestination">
+                        <h2>Search Destination</h2>
+                        <input type="text" id='destinationInput' placeholder="please enter a destination">
+                        <button id="searchDestinationButton"> search </button>
+                    </section>
 
-                    <input type="text" id='destinationInput' placeholder="please enter a destination">
-                    <button id="searchDestinationButton"> search </button>
-                    <div id="placelist">
-                        <select name="" id=""></select>
-                    </div>
-                    <input type="date" name="" id="tripStart">
-                    <button id="saveTripButton">save</button>
+                    <section id='sectionSaveNewTrip'>
+                        <h2 id="saveTripTitle">Save Trip</h2>
+                        <select id="placelist"></select>
+                        <input type="date" name="" id="newTripStart">
+                        <button id="saveTripButton">save</button>
+                    </section>
+
+                    <section id="sectionUpcomingTrips">
+                        <h2>Upcoming Trips</h2>
+                        <div id='upcomingTrips'></div>
+                    </section>
+
+
+
 
                 </section>
 
