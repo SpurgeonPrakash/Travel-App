@@ -18,21 +18,21 @@
 // flags
 
 
-const getForecast = async (data = {}) => {
+// const getForecast = async (data = {}) => {
 
-    const response = await fetch('http://localhost:8081/forecast', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    try {
-        let forecast = await response.json();
-        return forecast
-    }
-    catch (error) {
-        console.log("No forecast available")
-    }
-}
+//     const response = await fetch('http://localhost:8081/forecast', {
+//         method: 'POST',
+//         credentials: 'same-origin',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     })
+//     try {
+//         let forecast = await response.json();
+//         return forecast
+//     }
+//     catch (error) {
+//         console.log("No forecast available")
+//     }
+// }

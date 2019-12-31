@@ -43,20 +43,19 @@ let futureTrips = []
 app.post('/geonames', requestGeonamesData)
 // returns array objects containing geonames data (cityname, countryname, longitude and latitude)
 async function requestGeonamesData(req, res) {
-
-    let url = 'http://api.geonames.org/searchJSON?username=' + process.env.usernameGeonames
     futureTrips = []
-    let destination = req.body.destination
 
+    // retrieve data from geonames
+    let url = 'http://api.geonames.org/searchJSON?username=' + process.env.usernameGeonames
+    let destination = req.body.destination
+    url = url + "&name_equals=" + destination
+    const response = await fetch(url)
     try {
-        // retrieve data from geonames
-        url = url + "&name_equals=" + destination
-        const response = await fetch(url)
         var data = await response.json()
 
         let counter = 0
         let addCity = true
-        // filter data, datapoints with close latitude and longitude values are deleted
+        // filter data, delete datapoints of which the latitude and longitude values are close together
         for (const datapoint of data.geonames) {
             for (const place of futureTrips) {
                 if ((Math.abs(place.lat - datapoint.lat) < 15.0) && (place.countryName == datapoint.countryName)) {
@@ -81,15 +80,14 @@ async function requestGeonamesData(req, res) {
     }
 
 }
-///////////////////////////////////////////////////////
-// DARK SKY API                                      //
-///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+// DARK SKY API                                             //
+// request average high and low temperature for trip start  //
+//////////////////////////////////////////////////////////////
 app.post('/forecast', weatherForecast)
 async function weatherForecast(tripDate, latitude, longitude) {
     const tripDateSeconds = new Date(tripDate).getTime() / 1000
-
     const url = `https://api.darksky.net/forecast/${process.env.API_KEY_DARK_SKY}/${latitude},${longitude},${tripDateSeconds}?exclude=currently,minutely,hourly,alerts`
-
     const weatherforcast = await fetch(url)
     try {
         const result = await weatherforcast.json()
@@ -99,9 +97,10 @@ async function weatherForecast(tripDate, latitude, longitude) {
     }
 }
 
-///////////////////////////////////////////////////////
-// DARK SKY API                                      //
-///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+// PIXABAY  API                                                        //
+// request a picture for a given place, if not available then country  //
+/////////////////////////////////////////////////////////////////////////
 async function getPictures(place, country) {
     const url = `https://pixabay.com/api/?key=${process.env.API_KEY_PIXABAY}&q=${place},${country}&safesearch=true`
     const pictures = await fetch(url)
@@ -110,18 +109,28 @@ async function getPictures(place, country) {
         return { picURL: result.hits[0].webformatURL }
 
     } catch (e) {
-        console.log(e.toString())
-    }
+        try {
+            url = `https://pixabay.com/api/?key=${process.env.API_KEY_PIXABAY}&q=${country}&safesearch=true`
+            pictures = await fetch(url)
+            const result = await pictures.json()
+            return { picURL: result.hits[0].webformatURL }
+        } catch (e) {
+            console.log(e.toString())
+        }
 
+    }
 }
 
 
 ///////////////////////////////////////////////////////
 // HELPER FUNCTIONS                                  //
 ///////////////////////////////////////////////////////
+
 let plannedDestinations = []
 let counterTripId = 0
 
+// app data array planned destionations contains core trip data
+// changing data, such as weather and pic link are not stored, but requested each time the homepage reloads
 app.post('/saveTrip', saveNewTrip)
 function saveNewTrip(req, res) {
     let index = req.body.index
@@ -138,6 +147,7 @@ function saveNewTrip(req, res) {
     res.send(true)
 }
 
+// delete upcoming trip
 app.post('/deleteTrip', deleteUpcomingTrip)
 function deleteUpcomingTrip(req, res) {
     let tripId = req.body.id
@@ -151,13 +161,12 @@ function deleteUpcomingTrip(req, res) {
     res.send({ deletedTripId: tripId })
 }
 
+// future trips, enriched with weather and picture data
 app.post('/futureTrips', getFutureTrips)
 async function getFutureTrips(req, res) {
     let today = new Date();
     let tripDate
     let differenceInTime
-    let latitude
-    let longitude
 
     let fullTripData = []
 
@@ -171,12 +180,7 @@ async function getFutureTrips(req, res) {
         // To calculate the no. of days between two dates 
         var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
 
-        latitude = trip.lat
-        longitude = trip.lng
-
-        // let temperatureHigh = responseWeather.tempHigh
-        // let temperatureLow = responseWeather.tempLow
-        const responseWeather = await weatherForecast(tripDate, latitude, longitude)
+        const responseWeather = await weatherForecast(tripDate, trip.lat, trip.lng)
         const responsePic = await getPictures(trip.destination, trip.country)
         try {
             newEntry = {
@@ -195,10 +199,3 @@ async function getFutureTrips(req, res) {
     }
     res.send(fullTripData)
 }
-
-
-
-
-
-
-

@@ -13,21 +13,12 @@
         <div id="app">
             <header>
                 <h1>
-                    Natural Language Processing App
+                    Trip Planner App
                 </h1>
-                <div>
-                    A sentiment analysis for articles
-                </div>
             </header>
 
             <main>
-                <section class="senti_input">
-                    <form onsubmit="return Client.handleSubmit(event)">
-                        <input id="url" type="text" name="url" placeholder="please enter url">
-                        <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)"
-                            onsubmit="return Client.handleSubmit(event)">
-                    </form>
-
+                <section>
                     <section id="sectionSearchDestination">
                         <h2>Search Destination</h2>
                         <input type="text" id='destinationInput' placeholder="please enter a destination">
@@ -45,41 +36,13 @@
                         <h2>Upcoming Trips</h2>
                         <div id='upcomingTrips'></div>
                     </section>
-
-
-
-
-                </section>
-
-                <section class="sentiment_status">
-                    <div id="status"></div>
-                </section>
-
-                <section class="sentiment_result_section">
-                    <div class="result_card">
-                        <h2>Polarity</h2>
-                        <div id="polarity" class="result"></div>
-                    </div>
-
-                    <div class="result_card">
-                        <h2>Polarity Confidence</h2>
-                        <div id="polarityConfidence" class="result"></div>
-                    </div>
-
-                    <div class="result_card">
-                        <h2>Subjectivity</h2>
-                        <div id="subjectivity" class="result"></div>
-                    </div>
-
-                    <div class="result_card">
-                        <h2>Subjectivity Confidence</h2>
-                        <div id="subjectivityConfidence" class="result"></div>
-                    </div>
                 </section>
             </main>
 
             <footer>
-                <p>Analysis provided by Aylien</p>
+                <p>Thanks to <a href='http://www.geonames.org/export/web-services.html'>geonames</a> (location info), <a
+                        href='https://darksky.net/dev'>dark sky</a> (weather info) and <a
+                        href='https://pixabay.com/api/docs/'>pixabay</a> (picture).</p>
             </footer>
         </div>
     </div>
