@@ -2,7 +2,7 @@ import { handleSubmit } from './js/formHandler'
 import { validURL } from './js/urlChecker'
 import { performAction } from './js/app'
 import { getGeonames } from './js/geonames'
-import { saveTrip } from './js/geonames'
+import { saveTrip } from './js/tripHelper'
 
 
 import './styles/resets.scss'
@@ -21,7 +21,8 @@ export {
     handleSubmit,
     validURL,
     performAction,
-    getGeonames
+    getGeonames,
+    saveTrip
 }
 
 
