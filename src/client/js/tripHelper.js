@@ -31,6 +31,13 @@ async function saveTrip() {
         pTemperature.innerHTML = `Typical weather for then is: High ${trip.temperatureHigh},Low ${trip.temperatureLow}.`
         section.appendChild(pTemperature);
 
+        let imgTrip = document.createElement("IMG")
+        let imgURL = '' + trip.picURL
+        let imgSmallerSize = imgURL.replace("_640", "_180")
+        console.log(imgSmallerSize)
+        imgTrip.src = imgSmallerSize
+        section.appendChild(imgTrip)
+
         let tripId = trip.id
         section.setAttribute("id", `trip${tripId}`)
 

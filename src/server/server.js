@@ -82,31 +82,39 @@ async function requestGeonamesData(req, res) {
 
 }
 ///////////////////////////////////////////////////////
-// DARK SKY API                                     //
+// DARK SKY API                                      //
 ///////////////////////////////////////////////////////
 app.post('/forecast', weatherForecast)
 async function weatherForecast(tripDate, latitude, longitude) {
     const tripDateSeconds = new Date(tripDate).getTime() / 1000
 
-    const url = `https://api.darksky.net/forecast/${process.env.API_ID_DARK_SKY}/${latitude},${longitude},${tripDateSeconds}?exclude=currently,minutely,hourly,alerts`
+    const url = `https://api.darksky.net/forecast/${process.env.API_KEY_DARK_SKY}/${latitude},${longitude},${tripDateSeconds}?exclude=currently,minutely,hourly,alerts`
 
-
-    console.log(url)
     const weatherforcast = await fetch(url)
     try {
         const result = await weatherforcast.json()
-        console.log("result--------------------")
-        console.log(result)
-        console.log("daily--------------------")
-        console.log(result.daily)
-        console.log("data[0].temperatureHigh--------------------")
-        console.log(result.daily.data[0].temperatureHigh)
         return { tempHigh: result.daily.data[0].temperatureHigh, tempLow: result.daily.data[0].temperatureLow }
     } catch (e) {
-        console.log("error weatherForecast")
         console.log(e.toString())
     }
 }
+
+///////////////////////////////////////////////////////
+// DARK SKY API                                      //
+///////////////////////////////////////////////////////
+async function getPictures(place, country) {
+    const url = `https://pixabay.com/api/?key=${process.env.API_KEY_PIXABAY}&q=${place},${country}&safesearch=true`
+    const pictures = await fetch(url)
+    try {
+        const result = await pictures.json()
+        return { picURL: result.hits[0].webformatURL }
+
+    } catch (e) {
+        console.log(e.toString())
+    }
+
+}
+
 
 ///////////////////////////////////////////////////////
 // HELPER FUNCTIONS                                  //
@@ -153,10 +161,7 @@ async function getFutureTrips(req, res) {
 
     let fullTripData = []
 
-    // {
     for (const trip of plannedDestinations) {
-        console.log("plannedDestinations")
-
         // To set two dates to two variables 
         tripDate = new Date(trip.date)
 
@@ -169,36 +174,26 @@ async function getFutureTrips(req, res) {
         latitude = trip.lat
         longitude = trip.lng
 
-        console.log(`datum: ${tripDate}
-        Latitude: ${latitude}
-        longitude: ${longitude}`)
-
-        const response = await weatherForecast(tripDate, latitude, longitude)
-        console.log(response)
+        // let temperatureHigh = responseWeather.tempHigh
+        // let temperatureLow = responseWeather.tempLow
+        const responseWeather = await weatherForecast(tripDate, latitude, longitude)
+        const responsePic = await getPictures(trip.destination, trip.country)
         try {
             newEntry = {
                 ...trip,
                 daysUntilTripStart: differenceInDays,
-                temperatureHigh: response.tempHigh,
-                temperatureLow: response.tempLow
+                temperatureHigh: responseWeather.tempHigh,
+                temperatureLow: responseWeather.tempLow,
+                picURL: responsePic.picURL
             }
             fullTripData.push(newEntry)
-            console.log("fullTripData")
-            console.log(fullTripData)
 
         } catch (e) {
             console.log(e.toString())
         }
 
     }
-    // res.send(fullTripData)
-    // }
-    console.log("send")
-    // console.log(fullTripData)
     res.send(fullTripData)
-
-    // res.send("test")
-    // return "test"
 }
 
 
