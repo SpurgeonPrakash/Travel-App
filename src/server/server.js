@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable node/no-unsupported-features/es-syntax */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-restricted-syntax */
@@ -198,12 +199,8 @@ async function getFutureTrips(req, res) {
   const today = new Date();
   let tripDate;
   let differenceInTime;
-
+  let differenceInDays;
   const fullTripData = [];
-
-  const differenceInDays = [];
-  const responseWeather = [];
-  const responsePic = [];
 
   for (const trip of plannedDestinations) {
     // To set two dates to two variables
@@ -213,36 +210,25 @@ async function getFutureTrips(req, res) {
     differenceInTime = tripDate.getTime() - today.getTime();
 
     // To calculate the no. of days between two dates
-    differenceInDays.push(Math.floor(differenceInTime / (1000 * 3600 * 24)));
+    differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
 
-    responseWeather.push(weatherForecast(tripDate, trip.lat, trip.lng));
-    responsePic.push(getPictures(trip.destination, trip.country));
+    const responseWeather = await weatherForecast(tripDate, trip.lat, trip.lng);
+    const responsePic = await getPictures(trip.destination, trip.country);
+    try {
+      const newEntry = {
+        ...trip,
+        daysUntilTripStart: differenceInDays,
+        temperatureHigh: responseWeather.tempHigh,
+        temperatureLow: responseWeather.tempLow,
+        picURL: responsePic.picURL,
+      };
+      fullTripData.push(newEntry);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e.toString());
+    }
   }
-
-  await Promise.all(responseWeather, responsePic)
-    .then(() => {
-      console.log(responseWeather[0]);
-      console.log(responsePic[0]);
-      let counter = 0;
-      for (const trip of plannedDestinations) {
-        try {
-          const newEntry = {
-            // eslint-disable-next-line node/no-unsupported-features/es-syntax
-            ...trip,
-            daysUntilTripStart: differenceInDays,
-            temperatureHigh: responseWeather[counter].tempHigh,
-            temperatureLow: responseWeather[counter].tempLow,
-            picURL: responsePic[counter].picURL,
-          };
-          fullTripData.push(newEntry);
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.log(e.toString());
-        }
-        counter += 1;
-      }
-      res.send(fullTripData);
-    });
+  res.send(fullTripData);
 }
 
 app.post('/futureTrips', getFutureTrips);

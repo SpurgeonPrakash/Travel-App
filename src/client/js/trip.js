@@ -96,8 +96,6 @@ async function saveTrip() {
     const imgTrip = document.createElement('IMG');
     const imgURL = `${trip.picURL}`;
     const imgSmallerSize = imgURL.replace('_640', '_180');
-    // eslint-disable-next-line no-console
-    console.log(imgSmallerSize);
     imgTrip.src = imgSmallerSize;
     section.appendChild(imgTrip);
 
