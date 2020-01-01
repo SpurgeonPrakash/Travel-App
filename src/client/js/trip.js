@@ -20,7 +20,7 @@ const saveTripServer = async (url = '', data = {}) => {
 };
 
 // get upcoming trips saved on the server, data is enriched by countdown and temperature "forecast"
-const getUpcomingTrips = async (url = '', data = {}) => {
+const getUpcomingTripsServer = async (url = '', data = {}) => {
   let result = {};
   const response = await fetch(url, {
     method: 'POST',
@@ -59,17 +59,9 @@ const deleteUpcomingTrip = async (url = '', data = {}) => {
   return result;
 };
 
-// function saves a new trip, and rebuilds upcoming trip section
-async function saveTrip() {
-  // get new destination
-  const select = document.getElementById('placelist');
-  const selection = select.options[select.selectedIndex].value;
-
-  // get new date
-  const newDate = document.getElementById('newTripStart').value;
-
-  await saveTripServer('http://localhost:8081/saveTrip', { index: selection, date: newDate });
-  const upcomingTrips = await getUpcomingTrips('http://localhost:8081/futureTrips');
+// paste upcoming trips into browser window
+async function getUpcomingTripsBrowser() {
+  const upcomingTrips = await getUpcomingTripsServer('http://localhost:8081/futureTrips');
 
   const divUpcomingTrips = document.querySelector('#upcomingTrips');
   while (divUpcomingTrips.firstChild) {
@@ -121,8 +113,23 @@ async function saveTrip() {
   sectionSaveNewTrip.style.display = 'none';
 }
 
+
+// function saves a new trip, and rebuilds upcoming trip section
+async function saveTrip() {
+  // get new destination
+  const select = document.getElementById('placelist');
+  const selection = select.options[select.selectedIndex].value;
+
+  // get new date
+  const newDate = document.getElementById('newTripStart').value;
+
+  await saveTripServer('http://localhost:8081/saveTrip', { index: selection, date: newDate });
+  getUpcomingTripsBrowser();
+}
+
 // eslint-disable-next-line node/no-unsupported-features/es-syntax
 export {
   // eslint-disable-next-line import/prefer-default-export
   saveTrip,
+  getUpcomingTripsBrowser,
 };
