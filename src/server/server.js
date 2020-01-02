@@ -199,8 +199,10 @@ async function getFutureTrips(req, res) {
   const today = new Date();
   let tripDate;
   let differenceInTime;
-  let differenceInDays;
   const fullTripData = [];
+  const differenceInDays = [];
+  const requestWeather = [];
+  const requestPic = [];
 
   for (const trip of plannedDestinations) {
     // To set two dates to two variables
@@ -210,23 +212,31 @@ async function getFutureTrips(req, res) {
     differenceInTime = tripDate.getTime() - today.getTime();
 
     // To calculate the no. of days between two dates
-    differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+    differenceInDays.push(Math.floor(differenceInTime / (1000 * 3600 * 24)));
 
-    const responseWeather = await weatherForecast(tripDate, trip.lat, trip.lng);
-    const responsePic = await getPictures(trip.destination, trip.country);
+    requestWeather.push(weatherForecast(tripDate, trip.lat, trip.lng));
+    requestPic.push(getPictures(trip.destination, trip.country));
+  }
+
+  const responseWeather = await Promise.all(requestWeather);
+  const responsePic = await Promise.all(requestPic);
+
+  let counter = 0;
+  for (const trip of plannedDestinations) {
     try {
       const newEntry = {
         ...trip,
-        daysUntilTripStart: differenceInDays,
-        temperatureHigh: responseWeather.tempHigh,
-        temperatureLow: responseWeather.tempLow,
-        picURL: responsePic.picURL,
+        daysUntilTripStart: differenceInDays[counter],
+        temperatureHigh: responseWeather[counter].tempHigh,
+        temperatureLow: responseWeather[counter].tempLow,
+        picURL: responsePic[counter].picURL,
       };
       fullTripData.push(newEntry);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e.toString());
     }
+    counter += 1;
   }
   res.send(fullTripData);
 }
