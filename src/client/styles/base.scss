@@ -2,24 +2,22 @@
 @use 'variables';
 
 body {
-    margin: 0;
-    font-family: variables.$font-family;
-    background-image: url(../media/newspaper.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+  margin: 0;
+  font-family: variables.$font-family;
+  background: variables.$color-primary-light;
 
-    .wrap_app {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .wrap_app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    #app {
-        background: variables.$color-primary-light;
-        border-radius: variables.$border-radius;
-        border: thin solid variables.$color-primary-dark;
-        width: 90%;
-        max-width: 500px;
-    }
+  #app {
+    background: variables.$color-primary;
+    border: thin solid variables.$color-primary-dark;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    min-height: 100vh  !important;
+  }
 }

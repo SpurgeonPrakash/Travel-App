@@ -1,50 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Merriweather&display=swap"
+      rel="stylesheet"
+    />
     <title>Trip Planner App</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="wrap_app">
-        <div id="app">
-            <header>
-                <h1>
-                    Trip Planner App
-                </h1>
-            </header>
-
-            <main>
-                <section>
-                    <section id="sectionSearchDestination">
-                        <h2>Search Destination</h2>
-                        <input type="text" id='destinationInput' placeholder="please enter a destination">
-                        <button id="searchDestinationButton"> search </button>
-                    </section>
-
-                    <section id='sectionSaveNewTrip'>
-                        <h2 id="saveTripTitle">Save Trip</h2>
-                        <select id="placelist"></select>
-                        <input type="date" name="" id="newTripStart" value="2020-12-24">
-                        <button id="saveTripButton">save</button>
-                    </section>
-
-                    <section id="sectionUpcomingTrips">
-                        <h2>Upcoming Trips</h2>
-                        <div id='upcomingTrips'></div>
-                    </section>
-                </section>
-            </main>
-
-            <footer>
-                <p>Thanks to <a href='http://www.geonames.org/export/web-services.html'>geonames</a> (location info), <a
-                        href='https://darksky.net/dev'>dark sky</a> (weather info) and <a
-                        href='https://pixabay.com/api/docs/'>pixabay</a> (picture).</p>
-            </footer>
+      <div id="app">
+          <header id="outerHeader">
+        <div id="top-container">
+          <div id="pic1"></div>
+          <div id="pic2"></div>
+          <div id="pic3"></div>
+          <div id="pic4"></div>
+          <div id="pic5"></div>
+          <div id="pic6"></div>
+          <div id="pic7"></div>
+          <div id="pic8"></div>
+          <div id="pic9"></div>
+          <div id="pic10"></div>
+          <div id="pic11"></div>
+          <div id="pic12"></div>
         </div>
+        <header id="innerHeader">
+          <h1>
+            Travel Planner App
+          </h1>
+          <nav>
+            <button id="scrollToAddTripButton">+add trip</button>
+          </nav>
+        </header>
+    </header>
+
+        <main>
+          <section id="sectionUpcomingTrips">
+            <h2 id="headerUpcomingTrips">Upcoming Trips</h2>
+            <p id="commentUpcomingTrips"></p>
+            <div id="upcomingTrips"></div>
+          </section>
+
+          <div id="searchAndSaveSection">
+            <section id="sectionSearchDestination">
+              <h2>New trip</h2>
+              <input
+                type="text"
+                id="destinationInput"
+                placeholder="please enter a destination"
+              />
+              <div>
+                <button id="searchDestinationButton">search</button>
+              </div>
+            </section>
+
+            <section id="sectionSaveNewTrip">
+              <h2 id="saveTripTitle">Save Trip</h2>
+              <select id="placelist"></select>
+              <input type="date" name="" id="newTripStart" value="" />
+              <div>
+                <button id="saveTripButton">save</button>
+                <button id="cancelTripButton">cancel</button>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <footer>
+          <p>
+            Thanks to
+            <a href="http://www.geonames.org/export/web-services.html"
+              >geonames</a
+            >
+            (location info),
+            <a href="https://darksky.net/dev">dark sky</a> (weather info) and
+            <a href="https://pixabay.com/api/docs/">pixabay</a> (picture).
+          </p>
+        </footer>
+      </div>
     </div>
     <!-- <script>
         // Check that service workers are supported
@@ -56,6 +93,28 @@
         }
     </script> -->
 
-</body>
+    <script>
+      // When the user scrolls the page, execute myFunction
+      window.onscroll = function() {
+        myFunction();
+      };
 
+      // Get the header
+      var header = document.querySelector('header');
+
+      // Get the offset position of the navbar
+      var sticky = 103 //header.offsetTop;
+
+      // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+      function myFunction() {
+        if (window.pageYOffset > sticky) {
+          header.classList.add('sticky');
+        } else {
+          header.classList.remove('sticky');
+        }
+        console.log('windows offset');
+        console.log(window.pageYOffset);
+      }
+    </script>
+  </body>
 </html>

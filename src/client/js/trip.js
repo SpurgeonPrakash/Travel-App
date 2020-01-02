@@ -61,7 +61,18 @@ const deleteUpcomingTrip = async (url = '', data = {}) => {
 
 // paste upcoming trips into browser window
 async function getUpcomingTripsBrowser() {
-  const upcomingTrips = await getUpcomingTripsServer('http://localhost:8081/futureTrips');
+  const upcomingTrips = await getUpcomingTripsServer(
+    'http://localhost:8081/futureTrips',
+  );
+
+  // no upcoming trips
+  if (upcomingTrips.length === 0) {
+    const commentUpcomingTrips = document.querySelector(
+      '#commentUpcomingTrips',
+    );
+    commentUpcomingTrips.innerHTML = 'No plans yet.';
+    return;
+  }
 
   const divUpcomingTrips = document.querySelector('#upcomingTrips');
   while (divUpcomingTrips.firstChild) {
@@ -73,21 +84,21 @@ async function getUpcomingTripsBrowser() {
   for (const trip of upcomingTrips) {
     let section = document.createElement('SECTION');
 
-    const pTripDetails = document.createElement('P');
-    pTripDetails.innerHTML = `${trip.destination}, ${trip.country} on ${trip.date}`;
-    section.appendChild(pTripDetails);
+    const h3TripDetails = document.createElement('H3');
+    h3TripDetails.innerHTML = `${trip.destination}, ${trip.country} on ${trip.date}`;
+    section.appendChild(h3TripDetails);
 
     const pTripCountdown = document.createElement('P');
     pTripCountdown.innerHTML = `Trip is ${trip.daysUntilTripStart} days away.`;
     section.appendChild(pTripCountdown);
 
     const pTemperature = document.createElement('P');
-    pTemperature.innerHTML = `Typical weather for then is: High ${trip.temperatureHigh},Low ${trip.temperatureLow}.`;
+    pTemperature.innerHTML = `Typical weather for then is: high ${trip.temperatureHigh}F, low ${trip.temperatureLow}F.`;
     section.appendChild(pTemperature);
 
     const imgTrip = document.createElement('IMG');
     const imgURL = `${trip.picURL}`;
-    const imgSmallerSize = imgURL.replace('_640', '_180');
+    const imgSmallerSize = imgURL.replace('_640', '_640');
     imgTrip.src = imgSmallerSize;
     section.appendChild(imgTrip);
 
@@ -98,21 +109,33 @@ async function getUpcomingTripsBrowser() {
     deleteTripButton.innerHTML = 'delete';
     section.appendChild(deleteTripButton);
     deleteTripButton.addEventListener('click', () => {
-      deleteUpcomingTrip('http://localhost:8081/deleteTrip', { id: tripId })
-        .then((id) => {
-          section = document.querySelector(`#trip${id.deletedTripId}`);
-          while (section.firstChild) {
-            section.firstChild.remove();
-          }
-        });
+      deleteUpcomingTrip('http://localhost:8081/deleteTrip', {
+        id: tripId,
+      }).then((id) => {
+        section = document.querySelector(`#trip${id.deletedTripId}`);
+        while (section.firstChild) {
+          section.firstChild.remove();
+        }
+      });
     });
     frag.appendChild(section);
   }
   divUpcomingTrips.appendChild(frag);
+
+  const commentUpcomingTrips = document.querySelector('#commentUpcomingTrips');
+  commentUpcomingTrips.innerHTML = '';
+
   const sectionSaveNewTrip = document.querySelector('#sectionSaveNewTrip');
   sectionSaveNewTrip.style.display = 'none';
-}
 
+  const sectionSearchDestination = document.querySelector(
+    '#sectionSearchDestination',
+  );
+  sectionSearchDestination.style.display = 'block';
+
+  const destinationInput = document.querySelector('#destinationInput');
+  destinationInput.value = '';
+}
 
 // function saves a new trip, and rebuilds upcoming trip section
 async function saveTrip() {
@@ -123,13 +146,44 @@ async function saveTrip() {
   // get new date
   const newDate = document.getElementById('newTripStart').value;
 
-  await saveTripServer('http://localhost:8081/saveTrip', { index: selection, date: newDate });
+  await saveTripServer('http://localhost:8081/saveTrip', {
+    index: selection,
+    date: newDate,
+  });
   getUpcomingTripsBrowser();
+}
+
+// function cancels adding a new trip
+async function cancelTrip() {
+  const sectionSaveNewTrip = document.querySelector('#sectionSaveNewTrip');
+  sectionSaveNewTrip.style.display = 'none';
+
+  const sectionSearchDestination = document.querySelector(
+    '#sectionSearchDestination',
+  );
+  sectionSearchDestination.style.display = 'block';
+
+  const destinationInput = document.querySelector('#destinationInput');
+  destinationInput.value = '';
+}
+
+// when the + add trip button is clicked, window will scroll down to the add trip section
+function searchAndSave() {
+  const searchAndSaveSection = document.querySelector('#searchAndSaveSection');
+  const y = searchAndSaveSection.getBoundingClientRect().top + window.pageYOffset;
+  window.scrollTo({
+    top: y,
+    behavior: 'smooth',
+  });
+  const destinationInput = document.querySelector('#destinationInput');
+  destinationInput.select();
 }
 
 // eslint-disable-next-line node/no-unsupported-features/es-syntax
 export {
   // eslint-disable-next-line import/prefer-default-export
   saveTrip,
+  cancelTrip,
+  searchAndSave,
   getUpcomingTripsBrowser,
 };

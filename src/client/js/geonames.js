@@ -53,6 +53,9 @@ async function getGeonames(event) {
     // after the user searched for a possible destination, dropdown list becomes visible
     const sectionSaveNewTrip = document.querySelector('#sectionSaveNewTrip');
     sectionSaveNewTrip.style.display = 'block';
+
+    const sectionSearchDestination = document.querySelector('#sectionSearchDestination');
+    sectionSearchDestination.style.display = 'none';
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e.toString());

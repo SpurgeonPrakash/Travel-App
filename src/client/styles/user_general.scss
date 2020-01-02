@@ -1,0 +1,26 @@
+@use 'variables';
+
+section {
+  border-bottom: thin solid variables.$color-primary-text;
+  padding: variables.$padding-medium;
+
+  h2 {
+    font-size: variables.$font-size-header2;
+    margin-bottom: variables.$margin-medium;
+  }
+}
+
+button {
+  background: variables.$color-secondary-light;
+  border-radius: variables.$border-radius;
+  border-width: variables.$border-width;
+  border-style: solid;
+  border-color: variables.$color-secondary-dark;
+
+  &:hover {
+    background: variables.$color-secondary;
+    border-style: solid;
+    border-width: variables.$border-width;
+    border-color: variables.$color-secondary-dark;
+  }
+}

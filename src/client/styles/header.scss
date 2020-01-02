@@ -1,14 +1,105 @@
 @use 'variables';
 
-header {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+#top-container {
+  /** grid container */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  grid-gap: 3px 3px;
+  background: variables.$color-primary-dark;
 
-    margin: variables.$margin-std;
+  div {
+    height: 50px;
 
-    h1 {
-        font-size: variables.$font-size-header;
-        margin: variables.$margin-std;
+    &#pic1 {
+      background: url(../media/adventure.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
     }
+    &#pic2 {
+      background: url(../media/aircraft.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic3 {
+      background: url(../media/bora-bora.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic4 {
+      background: url(../media/busan.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic5 {
+      background: url(../media/cruise-ship.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic6 {
+      background: url(../media/maldives.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic7 {
+      background: url(../media/sea.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic8 {
+      background: url(../media/pier.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic9 {
+      background: url(../media/summer.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic10 {
+      background: url(../media/white-sand-beach.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic11 {
+      background: url(../media/wooden-track.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &#pic12 {
+      background: url(../media/surf.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+}
+
+#innerHeader {
+  display: flex;
+  justify-content: space-between;
+//   border-bottom: thin solid variables.$color-primary-text;
+  padding: variables.$padding-medium;
+  background: variables.$color-primary-dark;
+  width: inherit;
+  max-width: inherit;
+
+  h1 {
+    font-size: variables.$font-size-header1;
+  }
+
+  /* The sticky class is added to the header with JS when it reaches its scroll position */
+  &.sticky {
+    position: fixed;
+    top: 0;
+  }
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + main {
+  padding-top: calc(2 * 1rem + 2em);
+}
+
+#outerHeader {
+    border: thin solid variables.$color-primary-text;
 }
