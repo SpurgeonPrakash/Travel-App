@@ -8,6 +8,9 @@
   width: 100%;
   grid-gap: 3px 3px;
   background: variables.$color-primary-dark;
+  border-left: thin solid variables.$color-primary-text;
+  border-right: thin solid variables.$color-primary-text;
+  border-top: thin solid variables.$color-primary-text;
 
   div {
     height: 50px;
@@ -75,9 +78,10 @@
   }
 }
 
-#innerHeader {
+header {
   display: flex;
   justify-content: space-between;
+  border: thin solid variables.$color-primary-text;
 //   border-bottom: thin solid variables.$color-primary-text;
   padding: variables.$padding-medium;
   background: variables.$color-primary-dark;
@@ -100,6 +104,8 @@
   padding-top: calc(2 * 1rem + 2em);
 }
 
-#outerHeader {
-    border: thin solid variables.$color-primary-text;
-}
+// #outerHeader {
+//     border: thin solid variables.$color-primary-text;
+//     width: inherit;
+//     max-width: inherit;
+// }

@@ -98,7 +98,7 @@ async function getUpcomingTripsBrowser() {
 
     const imgTrip = document.createElement('IMG');
     const imgURL = `${trip.picURL}`;
-    const imgSmallerSize = imgURL.replace('_640', '_640');
+    const imgSmallerSize = imgURL.replace('_640', '_180');
     imgTrip.src = imgSmallerSize;
     section.appendChild(imgTrip);
 

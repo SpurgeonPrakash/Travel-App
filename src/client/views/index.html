@@ -13,7 +13,7 @@
   <body>
     <div class="wrap_app">
       <div id="app">
-          <header id="outerHeader">
+     
         <div id="top-container">
           <div id="pic1"></div>
           <div id="pic2"></div>
@@ -28,7 +28,7 @@
           <div id="pic11"></div>
           <div id="pic12"></div>
         </div>
-        <header id="innerHeader">
+        <header>
           <h1>
             Travel Planner App
           </h1>
@@ -36,7 +36,6 @@
             <button id="scrollToAddTripButton">+add trip</button>
           </nav>
         </header>
-    </header>
 
         <main>
           <section id="sectionUpcomingTrips">
@@ -100,10 +99,10 @@
       };
 
       // Get the header
-      var header = document.querySelector('header');
+      const header = document.querySelector('header');
 
       // Get the offset position of the navbar
-      var sticky = 103 //header.offsetTop;
+      const sticky = 103.6; //header.offsetTop;
 
       // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
       function myFunction() {
