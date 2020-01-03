@@ -1,24 +1,20 @@
 @use 'variables';
 
 #sectionSaveNewTrip {
-    display: none;
+  display: none;
 }
 
 #searchAndSaveSection {
-    input,  select {
-        box-sizing: border-box;
-        margin: 0;
-        border-width: 2px;
-        padding: 1px;
-        width: 250px;
-        font-family: variables.$font-family;
-        font-size: variables.$font-size-input;
-        height: 1.5rem;
-        margin-bottom: variables.$margin-medium;
-    }
-
-    // select {
-    //     margin-bottom: variables.$margin-medium;
-    // }
-    
+  input,
+  select {
+    box-sizing: border-box;
+    margin: 0;
+    border-width: 2px;
+    padding: 1px;
+    width: 250px;
+    font-family: variables.$font-family;
+    font-size: variables.$font-size-input;
+    height: 1.5rem;
+    margin-bottom: variables.$margin-medium;
+  }
 }

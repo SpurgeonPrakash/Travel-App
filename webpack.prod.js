@@ -10,22 +10,22 @@ module.exports = {
   entry: './src/client/index.js',
   mode: 'production',
   optimization: {
-    minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})]
   },
   output: {
     libraryTarget: 'var',
-    library: 'Client',
+    library: 'Client'
   },
   module: {
     rules: [
       {
         test: '/.js$/',
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -38,20 +38,20 @@ module.exports = {
               disable: false, // webpack@2.x and newer
               mozjpeg: {
                 progressive: true,
-                quality: 15,
-              },
-            },
-          },
-        ],
-      },
-    ],
+                quality: 15
+              }
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: './src/client/views/index.html',
-      filename: './index.html',
+      filename: './index.html'
     }),
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-    new WorkboxPlugin.GenerateSW(),
-  ],
+    new WorkboxPlugin.GenerateSW()
+  ]
 };

@@ -7,31 +7,27 @@
   }
 
   p {
-      font-size: variables.$font-size-paragraph;
-      margin-bottom: variables.$margin-small;
+    font-size: variables.$font-size-paragraph-mobile;
+    margin-bottom: variables.$margin-small;
+  }
+
+  @media (min-width: 980px) {
+    p {
+      // font-size: variables.$font-size-paragraph-mobile;
+    }
   }
 
   img {
     display: block;
-    // width: 50%;
     height: 7rem;
     margin-bottom: variables.$margin-small;
     border-radius: variables.$border-radius;
   }
 
   section {
-      margin-bottom: variables.$margin-medium;
-      border: thin solid variables.$color-primary-text;
-      background: variables.$color-secondary-dark;
-      border-radius: variables.$border-radius;
-      
-
-    // &:last-child{
-    //   margin-bottom: 0;
-    //   border-bottom:0;
-    // }
+    margin-bottom: variables.$margin-medium;
+    border: thin solid variables.$color-primary-text;
+    background: variables.$color-secondary-dark;
+    border-radius: variables.$border-radius;
   }
-
-  
-
 }

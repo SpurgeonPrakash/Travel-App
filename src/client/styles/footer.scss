@@ -1,9 +1,9 @@
 @use 'variables';
 
 footer {
-    margin: variables.$margin-medium;
+  margin: variables.$margin-medium;
 
-    p {
-        font-size: variables.$font-size-footer;
-    }
+  p {
+    font-size: variables.$font-size-footer;
+  }
 }

@@ -1,36 +1,43 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
-// function requests geonames data
-async function requestGeonamesData(url = '', data = {}) {
-  let geonamesData = {};
+// TODO write test
+/**
+ * Request geonames data from server.
+ * @param {string} url API url
+ * @param {Object} destination destination
+ * @param {string} destination.name place name
+ * @return {Array<{toponymName: string, countryName: string, lng: number, lat: number}>} possiblePlaces, array with objects containing geoname data
+ */
+async function requestGeonamesData(destination = {}) {
+  let possiblePlaces = {};
+  const url = 'http://localhost:8081/geonames';
   const response = await fetch(url, {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(destination)
   });
   try {
-    geonamesData = await response.json();
+    possiblePlaces = await response.json();
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e.toString());
   }
-  return geonamesData;
+  return possiblePlaces;
 }
 
-// function creates a dropdown list that shows all possible destinations,
-// after the user searched for a destination
-// eslint-disable-next-line no-unused-vars
+/**
+ * Function creates a dropdown list that shows all possible destinations,
+ * triggered by (search) button click event.
+ * Section save new trip becomes visible.
+ * Section search for new trip becomes hidden.
+ * @param {*} event
+ */
 async function getGeonames(event) {
   event.preventDefault();
-
   const destinationInput = document.getElementById('destinationInput').value;
-  const route = 'http://localhost:8081/geonames';
-
-  const geonames = await requestGeonamesData(route, {
-    destination: destinationInput,
-  });
+  const geonames = await requestGeonamesData({ name: destinationInput });
   try {
     // deleting old entries of dropdown list
     const select = document.querySelector('#placelist');
@@ -44,7 +51,7 @@ async function getGeonames(event) {
     // eslint-disable-next-line no-restricted-syntax
     for (const place of geonames) {
       frag.appendChild(
-        new Option(`${place.toponymName}, ${place.countryName}`, counter),
+        new Option(`${place.toponymName}, ${place.countryName}`, counter)
       );
       counter += 1;
     }
@@ -54,7 +61,9 @@ async function getGeonames(event) {
     const sectionSaveNewTrip = document.querySelector('#sectionSaveNewTrip');
     sectionSaveNewTrip.style.display = 'block';
 
-    const sectionSearchDestination = document.querySelector('#sectionSearchDestination');
+    const sectionSearchDestination = document.querySelector(
+      '#sectionSearchDestination'
+    );
     sectionSearchDestination.style.display = 'none';
   } catch (e) {
     // eslint-disable-next-line no-console
@@ -65,5 +74,5 @@ async function getGeonames(event) {
 export {
   // eslint-disable-next-line import/prefer-default-export
   getGeonames,
-  requestGeonamesData,
+  requestGeonamesData
 };

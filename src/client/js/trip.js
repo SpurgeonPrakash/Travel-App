@@ -1,13 +1,19 @@
-// POST route: save trip data to server
-const saveTripServer = async (url = '', data = {}) => {
+/**
+ * Send new trip data to server
+ * @param {Object} newTrip
+ * @param {number} newTrip.index dropdown list number
+ * @param {date} newTrip.date start date of trip
+ */
+const saveTripServer = async (newTrip = {}) => {
   let result = {};
+  const url = 'http://localhost:8081/saveTrip';
   const response = await fetch(url, {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(newTrip)
   });
 
   try {
@@ -19,16 +25,20 @@ const saveTripServer = async (url = '', data = {}) => {
   return result;
 };
 
-// get upcoming trips saved on the server, data is enriched by countdown and temperature "forecast"
-const getUpcomingTripsServer = async (url = '', data = {}) => {
+/**
+ * Get upcoming trips from the server, data is enriched by countdown and temperature "forecast"
+ * @return {Array<{toponymName: string, countryName: string, lng: number, lat: number, differenceInDays: number, temperatureHigh: number, temperatureLow: number, picURL: string}>}
+ */
+const getUpcomingTripsServer = async () => {
   let result = {};
+  const url = 'http://localhost:8081/futureTrips';
   const response = await fetch(url, {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify()
   });
   try {
     result = await response.json();
@@ -39,16 +49,22 @@ const getUpcomingTripsServer = async (url = '', data = {}) => {
   return result;
 };
 
-// helper function to delete future trip on the server
-const deleteUpcomingTrip = async (url = '', data = {}) => {
+/**
+ * Helper function to delete future trip on the server
+ * @param {Objecy} trip
+ * @param {number} trip.id
+ * @return {{deletedTripId: number}}
+ */
+const deleteUpcomingTrip = async (trip = {}) => {
   let result = {};
+  const url = 'http://localhost:8081/deleteTrip';
   const response = await fetch(url, {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(trip)
   });
   try {
     result = await response.json();
@@ -59,16 +75,18 @@ const deleteUpcomingTrip = async (url = '', data = {}) => {
   return result;
 };
 
-// paste upcoming trips into browser window
+//
+
+/**
+ * Displays upcoming trips in browser window
+ */
 async function getUpcomingTripsBrowser() {
-  const upcomingTrips = await getUpcomingTripsServer(
-    'http://localhost:8081/futureTrips',
-  );
+  const upcomingTrips = await getUpcomingTripsServer();
 
   // no upcoming trips
   if (upcomingTrips.length === 0) {
     const commentUpcomingTrips = document.querySelector(
-      '#commentUpcomingTrips',
+      '#commentUpcomingTrips'
     );
     commentUpcomingTrips.innerHTML = 'No plans yet.';
     return;
@@ -109,12 +127,20 @@ async function getUpcomingTripsBrowser() {
     deleteTripButton.innerHTML = 'delete';
     section.appendChild(deleteTripButton);
     deleteTripButton.addEventListener('click', () => {
-      deleteUpcomingTrip('http://localhost:8081/deleteTrip', {
-        id: tripId,
-      }).then((id) => {
+      deleteUpcomingTrip({
+        id: tripId
+      }).then(id => {
         section = document.querySelector(`#trip${id.deletedTripId}`);
         while (section.firstChild) {
           section.firstChild.remove();
+        }
+        section.parentNode.removeChild(section);
+        const div = document.querySelector('#upcomingTrips');
+        if (div.childNodes.length === 0) {
+          const commentUpcomingTrips = document.querySelector(
+            '#commentUpcomingTrips'
+          );
+          commentUpcomingTrips.innerHTML = 'No plans yet.';
         }
       });
     });
@@ -129,7 +155,7 @@ async function getUpcomingTripsBrowser() {
   sectionSaveNewTrip.style.display = 'none';
 
   const sectionSearchDestination = document.querySelector(
-    '#sectionSearchDestination',
+    '#sectionSearchDestination'
   );
   sectionSearchDestination.style.display = 'block';
 
@@ -137,7 +163,9 @@ async function getUpcomingTripsBrowser() {
   destinationInput.value = '';
 }
 
-// function saves a new trip, and rebuilds upcoming trip section
+/**
+ * Function saves a new trip, and rebuilds upcoming trip section
+ */
 async function saveTrip() {
   // get new destination
   const select = document.getElementById('placelist');
@@ -146,20 +174,22 @@ async function saveTrip() {
   // get new date
   const newDate = document.getElementById('newTripStart').value;
 
-  await saveTripServer('http://localhost:8081/saveTrip', {
+  await saveTripServer({
     index: selection,
-    date: newDate,
+    date: newDate
   });
   getUpcomingTripsBrowser();
 }
 
-// function cancels adding a new trip
+/**
+ * Function cancels adding a new trip
+ */
 async function cancelTrip() {
   const sectionSaveNewTrip = document.querySelector('#sectionSaveNewTrip');
   sectionSaveNewTrip.style.display = 'none';
 
   const sectionSearchDestination = document.querySelector(
-    '#sectionSearchDestination',
+    '#sectionSearchDestination'
   );
   sectionSearchDestination.style.display = 'block';
 
@@ -167,13 +197,16 @@ async function cancelTrip() {
   destinationInput.value = '';
 }
 
-// when the + add trip button is clicked, window will scroll down to the add trip section
+/**
+ * When the + add trip button is clicked, window will scroll down to the add trip section
+ */
 function searchAndSave() {
   const searchAndSaveSection = document.querySelector('#searchAndSaveSection');
-  const y = searchAndSaveSection.getBoundingClientRect().top + window.pageYOffset;
+  const y =
+    searchAndSaveSection.getBoundingClientRect().top + window.pageYOffset;
   window.scrollTo({
     top: y,
-    behavior: 'smooth',
+    behavior: 'smooth'
   });
   const destinationInput = document.querySelector('#destinationInput');
   destinationInput.select();
@@ -185,5 +218,5 @@ export {
   saveTrip,
   cancelTrip,
   searchAndSave,
-  getUpcomingTripsBrowser,
+  getUpcomingTripsBrowser
 };

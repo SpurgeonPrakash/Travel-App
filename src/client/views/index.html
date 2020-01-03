@@ -13,7 +13,6 @@
   <body>
     <div class="wrap_app">
       <div id="app">
-     
         <div id="top-container">
           <div id="pic1"></div>
           <div id="pic2"></div>
@@ -82,16 +81,6 @@
         </footer>
       </div>
     </div>
-    <!-- <script>
-        // Check that service workers are supported
-        if ('serviceWorker' in navigator) {
-            // Use the window load event to keep the page load performant
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js');
-            });
-        }
-    </script> -->
-
     <script>
       // When the user scrolls the page, execute myFunction
       window.onscroll = function() {
@@ -102,7 +91,7 @@
       const header = document.querySelector('header');
 
       // Get the offset position of the navbar
-      const sticky = 103.6; //header.offsetTop;
+      const sticky = 103.6;
 
       // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
       function myFunction() {
@@ -111,8 +100,15 @@
         } else {
           header.classList.remove('sticky');
         }
-        console.log('windows offset');
-        console.log(window.pageYOffset);
+      }
+    </script>
+    <script>
+      // Check that service workers are supported
+      if ('serviceWorker' in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
       }
     </script>
   </body>

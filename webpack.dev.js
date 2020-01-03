@@ -10,30 +10,30 @@ module.exports = {
   stats: 'verbose',
   output: {
     libraryTarget: 'var',
-    library: 'Client',
+    library: 'Client'
   },
   module: {
     rules: [
       {
         // eslint-disable-next-line no-useless-escape
-        test: '/\.js$/',
+        test: '/.js$/',
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader'],
-      },
-    ],
+        use: ['file-loader']
+      }
+    ]
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: './src/client/views/index.html',
-      filename: './index.html',
+      filename: './index.html'
     }),
     new CleanWebpackPlugin({
       // Simulate the removal of files
@@ -42,7 +42,7 @@ module.exports = {
       verbose: true,
       // Automatically remove all unused webpack assets on rebuild
       cleanStaleWebpackAssets: true,
-      protectWebpackAssets: false,
-    }),
-  ],
+      protectWebpackAssets: false
+    })
+  ]
 };

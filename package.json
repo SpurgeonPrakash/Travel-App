@@ -5,11 +5,19 @@
   "scripts": {
     "test": "jest",
     "start": "node src/server/server.js",
+    "supertest_server": "node src/test/server/supertest_client.js",
+    "supertest_unittest": "node src/test/server/unittest.js | tap-spec",
     "nodemon": "nodemon src/server/server.js",
     "build-prod": "webpack --config webpack.prod.js",
     "build-dev": "webpack-dev-server  --config webpack.dev.js --open",
     "watch:frontEnd": "webpack --watch --mode development --config webpack.prod.js",
     "startAll": "npm-run-all -p nodemon watch:frontEnd"
+  },
+  "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./setupJest.js"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -21,8 +29,10 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "es6-promise": "^4.2.8",
     "express": "^4.17.1",
     "file-loader": "^5.0.2",
+    "isomorphic-fetch": "^2.2.1",
     "node-fetch": "^2.6.0",
     "run-all": "^1.0.1",
     "sass": "^1.24.0"
@@ -48,12 +58,16 @@
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^6.0.0",
     "jest": "^24.9.0",
+    "jest-fetch-mock": "^3.0.1",
     "mini-css-extract-plugin": "^0.8.2",
     "nodemon": "^2.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
+    "supertest": "^4.0.2",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.12.1",
     "terser-webpack-plugin": "^2.3.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",

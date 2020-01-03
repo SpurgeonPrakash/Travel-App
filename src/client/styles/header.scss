@@ -14,7 +14,6 @@
 
   div {
     height: 50px;
-
     &#pic1 {
       background: url(../media/adventure.jpg);
       background-repeat: no-repeat;
@@ -82,7 +81,6 @@ header {
   display: flex;
   justify-content: space-between;
   border: thin solid variables.$color-primary-text;
-//   border-bottom: thin solid variables.$color-primary-text;
   padding: variables.$padding-medium;
   background: variables.$color-primary-dark;
   width: inherit;
@@ -103,9 +101,3 @@ header {
 .sticky + main {
   padding-top: calc(2 * 1rem + 2em);
 }
-
-// #outerHeader {
-//     border: thin solid variables.$color-primary-text;
-//     width: inherit;
-//     max-width: inherit;
-// }
