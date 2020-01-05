@@ -19,7 +19,7 @@ async function requestGeonamesData(destination = {}) {
     },
     body: JSON.stringify(destination)
   });
-  console.log(response);
+
   try {
     possiblePlaces = await response.json();
   } catch (e) {
