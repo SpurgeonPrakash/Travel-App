@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./src/client",
     "start": "node src/server/server.js",
+    "test": "jest ./src/client",
     "supertest_server": "node src/test/server/supertest_client.js",
     "supertest_unittest": "node src/test/server/unittest.js | tap-spec",
-    "nodemon": "nodemon src/server/server.js",
     "build-prod": "webpack --config webpack.prod.js",
     "build-dev": "webpack-dev-server  --config webpack.dev.js --open",
     "watch:frontEnd": "webpack --watch --mode development --config webpack.prod.js",
+    "nodemon": "nodemon src/server/server.js",
     "startAll": "npm-run-all -p nodemon watch:frontEnd"
   },
   "jest": {
