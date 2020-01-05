@@ -10,13 +10,13 @@ The user can enter a destination of interest and save his trip. A countdown and 
 
 ### Architecture
 
-Added additional folder test/server, since testing server routes doesn't work with jest.
+Added additional folder test/server. See testing below.
 
 ### Webpack
 
 The scripts 'start', 'build-prod' and 'build-dev' are as described in class.
 
-Test scripts see description next paragraph.
+Test scripts: See description next paragraph.
 
 The script 'startAll' is for development. It rebuilds the dist folder, and restarts the express server after file changes.
 
@@ -24,17 +24,17 @@ The script 'startAll' is for development. It rebuilds the dist folder, and resta
 
 The script 'test' is for testing the client side (with fetch-mock-jest) .
 
-The scripts 'supertest_server' and 'supertest_unittest' is for testing routes on the server side.
+The scripts 'supertest_server' and 'supertest_unittest' is for testing routes on the server side. The corresponding test files are located in the folder src/test/server.
 
 ### Offline capabilities
 
-Implemented as in class.
+Service worker was implemented as in class.
 
 ## HTML & CSS
 
 ### Visual Design
 
--when user click '+ add trip' button, the window scrolls down to the search field for places.
+-when user clicks '+ add trip' button, the window scrolls down to the search field for places.
 -sticky header
 
 ## API and JS Integration
