@@ -22,7 +22,7 @@ describe('testing api request geonames from client side', () => {
 
     // assert on the response
     requestGeonamesData({ destination: 'Barcelona' }).then(res => {
-      expect(res.data[0]).toEqual({
+      expect(res).toEqual({
         toponymName: 'Barcelona',
         countryName: 'Spain',
         lng: '2.15899',
