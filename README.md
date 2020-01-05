@@ -8,6 +8,10 @@ The user can enter a destination of interest and save his trip. A countdown and 
 
 ## Result
 
-![screenshot](src/client/media/readme1.png)
-![screenshot](src/client/media/readme2.png)
-![screenshot](src/client/media/readme3.png)
+![screenshot](src/client/media/readme1.png | width=48)
+
+![screenshot](src/client/media/readme2.png | width=48)
+
+![screenshot](src/client/media/readme3.png | width=48)
+
+
