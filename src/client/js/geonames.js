@@ -7,6 +7,7 @@
  * @param {string} destination.name place name
  * @return {Array<{toponymName: string, countryName: string, lng: number, lat: number}>} possiblePlaces, array with objects containing geoname data
  */
+
 async function requestGeonamesData(destination = {}) {
   let possiblePlaces = {};
   const url = 'http://localhost:8081/geonames';
@@ -18,6 +19,7 @@ async function requestGeonamesData(destination = {}) {
     },
     body: JSON.stringify(destination)
   });
+  console.log(response);
   try {
     possiblePlaces = await response.json();
   } catch (e) {

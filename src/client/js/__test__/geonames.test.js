@@ -1,15 +1,16 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+/* eslint-disable node/no-unpublished-import */
 /* eslint-disable node/no-unsupported-features/es-syntax */
-import { APIRequest } from './api';
-import { requestGeonamesData } from './geonames';
+import { requestGeonamesData } from '../geonames';
+// eslint-disable-next-line node/no-unpublished-require
+const fetch = require('jest-fetch-mock');
 
-describe('testing api', () => {
+describe('testing api request geonames from client side', () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
 
-  it('calls geonames and returns names to me', () => {
+  it('calls requestGeonamesData and returns data to me', () => {
     fetch.mockResponseOnce(
       JSON.stringify({
         toponymName: 'Barcelona',
@@ -19,20 +20,9 @@ describe('testing api', () => {
       })
     );
 
-    fetch.mockResponse(() =>
-      requestGeonamesData({ name: 'Barcelona' }).then(res => ({
-        body: {
-          toponymName: 'Barcelona',
-          countryName: 'Spain',
-          lng: '2.15899',
-          lat: '41.38879'
-        }
-      }))
-    );
-
     // assert on the response
-    APIRequest('geonames').then(res => {
-      expect(res).toEqual({
+    requestGeonamesData({ destination: 'Barcelona' }).then(res => {
+      expect(res.data[0]).toEqual({
         toponymName: 'Barcelona',
         countryName: 'Spain',
         lng: '2.15899',

@@ -210,12 +210,3 @@ exports.getFutureTrips = async function(_req, res) {
 };
 
 // app.post('/futureTrips', getFutureTrips);
-
-// eslint-disable-next-line node/no-unsupported-features/es-syntax
-// module.exports = {
-//   requestGeonamesData: function(){},
-//   weatherForecast: function(){},
-//   saveNewTrip: function(){},
-//   deleteUpcomingTrip: function(){},
-//   getFutureTrips: function(){}
-// };

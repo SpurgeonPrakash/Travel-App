@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest ./src/client",
     "start": "node src/server/server.js",
     "supertest_server": "node src/test/server/supertest_client.js",
     "supertest_unittest": "node src/test/server/unittest.js | tap-spec",
