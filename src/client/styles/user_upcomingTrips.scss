@@ -11,12 +11,6 @@
     margin-bottom: variables.$margin-small;
   }
 
-  @media (min-width: 980px) {
-    p {
-      // font-size: variables.$font-size-paragraph-mobile;
-    }
-  }
-
   img {
     display: block;
     height: 7rem;
@@ -29,5 +23,13 @@
     border: thin solid variables.$color-primary-text;
     background: variables.$color-secondary-dark;
     border-radius: variables.$border-radius;
+  }
+
+  @media (min-width: 850px) {
+    #upcomingTrips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 5px 5px;
+    }
   }
 }

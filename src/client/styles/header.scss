@@ -77,6 +77,12 @@
   }
 }
 
+@media (min-width: 850px) {
+  #top-container div {
+    height: 75px;
+  }
+}
+
 header {
   display: flex;
   justify-content: space-between;
