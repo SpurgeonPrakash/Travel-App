@@ -6,6 +6,12 @@ The objective is to build a website that allows the user to add future trips.
 
 The user can enter a destination of interest and save his trip. A countdown and a weather forecast are displayed. The user can delete any trip.
 
+## Get Started
+Created .env file and enter your API keys and credentials for geonames, darksky and pixabay.
+usernameGeonames= "abc"
+API_KEY_DARK_SKY = "abc123"
+API_KEY_PIXABAY = "xyz789"
+
 ## Comments
 
 ### Architecture
